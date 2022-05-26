@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Add our dependencies
 
 import csv
@@ -58,49 +57,57 @@ with open(file_to_load) as election_data:
 
         candidate_votes[candidate_name] += 1
 
-print(total_votes)
+with open(file_to_save, "w") as txt_file:
 
-print(candidate_options)
+    election_results = (
+        f"Election Results\n"
+        f"-------------------------\n"
+        f"Total Votes: {total_votes:,}\n"
+        f"-------------------------\n")
+    print(election_results, end="")
 
-print(candidate_votes)
+    
 
-# Print percentage of votes each candidate received
-for candidate_name in candidate_votes:
+    txt_file.write(election_results)
 
-    votes = candidate_votes[candidate_name]
 
-    vote_percentage = float(votes) / float(total_votes) * 100
 
-    print(f"{candidate_name}: received {round(vote_percentage,1)}% of the vote.")
+    print(total_votes)
 
-    print(f"{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n")
+    print(candidate_options)
 
-    if (votes > winning_count) and (vote_percentage > winning_percentage):
-     # 2. If true then set winning_count = votes and winning_percent =
-     # vote_percentage.
-     winning_count = votes
-     winning_percentage = vote_percentage
-     # 3. Set the winning_candidate equal to the candidate's name.
-     winning_candidate = candidate_name
+    print(candidate_votes)
 
-winning_candidate_summary = (
-    f"-------------------------\n"
-    f"Winner: {winning_candidate}\n"
-    f"Winning Vote Count: {winning_count:,}\n"
-    f"Winning Percentage: {winning_percentage:.1f}%\n"
-    f"-------------------------\n")
-print(winning_candidate_summary)
-=======
-import csv
-import os
+    # Print percentage of votes each candidate received
+    for candidate_name in candidate_votes:
 
-file_to_load = "Resources/election_results.csv"
+        votes = candidate_votes[candidate_name]
 
-file_to_save = os.path.join("analysis", "election_analysis.txt")
+        vote_percentage = float(votes) / float(total_votes) * 100
 
-with open(file_to_load) as election_data:
-    file_reader = csv.reader(election_data)
+        print(f"{candidate_name}: received {round(vote_percentage,1)}% of the vote.")
 
-    headers = next(file_reader)
-    print(headers)
->>>>>>> cc4ae00b9935b5c74939fa29f4f9a070a28e6893
+        candidate_results = (f"{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n")
+
+        txt_file.write(candidate_results)
+
+        if (votes > winning_count) and (vote_percentage > winning_percentage):
+            # 2. If true then set winning_count = votes and winning_percent =
+            # vote_percentage.
+            winning_count = votes
+            winning_percentage = vote_percentage
+            # 3. Set the winning_candidate equal to the candidate's name.
+            winning_candidate = candidate_name
+
+
+
+    winning_candidate_summary = (
+        f"-------------------------\n"
+        f"Winner: {winning_candidate}\n"
+        f"Winning Vote Count: {winning_count:,}\n"
+        f"Winning Percentage: {winning_percentage:.1f}%\n"
+        f"-------------------------\n")
+    #print(winning_candidate_summary)
+
+
+    txt_file.write(winning_candidate_summary)
